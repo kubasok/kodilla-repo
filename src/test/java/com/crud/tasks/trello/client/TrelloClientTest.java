@@ -106,7 +106,7 @@ public class TrelloClientTest {
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
 
 //        Then
-        assertEquals(0, fetchedTrelloBoards.size());
-        assertEquals(new ArrayList<>(), fetchedTrelloBoards);
+        assertTrue(fetchedTrelloBoards.isEmpty());
+
     }
 }
