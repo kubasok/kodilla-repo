@@ -26,8 +26,9 @@ public class EmailScheduler {
 //    @Scheduled(fixedDelay = 10000)
     public void sendInformationEmail() {
         long size  = taskRepository.count();
-        String sufix = "";
-        if (size > 1) sufix = "s";
+        String sufix = size > 1 ? "s" : "";
+//        String sufix = "";
+//        if (size > 1) sufix = "s";
         simpleEmailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
                 "Currently in database: " + size + " task" + sufix, ""));
     }
