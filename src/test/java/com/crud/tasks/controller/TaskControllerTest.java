@@ -39,6 +39,9 @@ public class TaskControllerTest {
     @MockBean
     private TaskService service;
 
+    private static final String TESTTITLE = "Test task";
+    private static final String TESTCONTENT = "Testing task";
+
     @Test
     public void shouldFetchEmptyTaskList() throws Exception {
         //Given
@@ -57,9 +60,9 @@ public class TaskControllerTest {
     public void shouldFetchTaskList() throws Exception {
         //Given
         List<Task> testTasks = new ArrayList<>();
-        testTasks.add(new Task(1, "Test task", "Testing task"));
+        testTasks.add(new Task(1, TESTTITLE, TESTCONTENT));
         List<TaskDto> testTaskDtos = new ArrayList<>();
-        testTaskDtos.add(new TaskDto(1, "Test task", "Testing task"));
+        testTaskDtos.add(new TaskDto(1, TESTTITLE, TESTCONTENT));
 
         when(service.getAllTasks()).thenReturn(testTasks);
         when(taskMapper.mapToTaskDtoList(testTasks)).thenReturn(testTaskDtos);
@@ -69,15 +72,15 @@ public class TaskControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
-                .andExpect(jsonPath("$[0].title", is("Test task")))
-                .andExpect(jsonPath("$[0].content", is("Testing task")));
+                .andExpect(jsonPath("$[0].title", is(TESTTITLE)))
+                .andExpect(jsonPath("$[0].content", is(TESTCONTENT)));
     }
 
     @Test
     public void shouldCreateTask() throws Exception {
         //Given
-        TaskDto taskDto = new TaskDto(1, "Test task", "Testing task");
-        Task task = new Task(1, "Test task", "Testing task");
+        TaskDto taskDto = new TaskDto(1, TESTTITLE, TESTCONTENT);
+        Task task = new Task(1, TESTTITLE, TESTCONTENT);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(taskDto);
@@ -89,8 +92,8 @@ public class TaskControllerTest {
         mockMvc.perform(post("/v1/task/createTask")
                 .contentType(MediaType.APPLICATION_JSON_VALUE).characterEncoding("UTF-8").content(jsonContent))
                 .andExpect(jsonPath("$.id",is(1)))
-                .andExpect(jsonPath("$.title", is("Test task")))
-                .andExpect(jsonPath("$.content", is("Testing task")));
+                .andExpect(jsonPath("$.title", is(TESTTITLE)))
+                .andExpect(jsonPath("$.content", is(TESTCONTENT)));
 
 
     }
