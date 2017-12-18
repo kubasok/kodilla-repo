@@ -1,6 +1,7 @@
 package com.crud.tasks.trello.client;
 
 import com.crud.tasks.config.TrelloConfig;
+import com.crud.tasks.domain.TrelloBoard;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.domain.CreatedTrelloCardDto;
@@ -37,11 +38,13 @@ public class TrelloClient {
     public List<TrelloBoardDto> getTrelloBoards() {
         URI url = getUrl(trelloConfig.getTrelloApiEndpoint(), trelloConfig.getTrelloAppKey(),
                 trelloConfig.getTrelloToken(),"name,id",trelloConfig.getTrelloUsername());
-
+        System.out.println(url);
         try {
             TrelloBoardDto[] boardsResponse =
                     restTemplate.getForObject(url, TrelloBoardDto[].class);
+//            System.out.println(boardsResponse.length);
             return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
+
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return new ArrayList<>();
@@ -62,7 +65,7 @@ public class TrelloClient {
         return restTemplate.postForObject(url, null, CreatedTrelloCardDto.class);
     }
 
-    private URI getUrl(String endpoint, String key, String token, String fields, String username) {
+    public URI getUrl(String endpoint, String key, String token, String fields, String username) {
         return UriComponentsBuilder.fromHttpUrl(endpoint + "/members/" + username + "/boards")
                 .queryParam("key", key)
                 .queryParam("token", token)

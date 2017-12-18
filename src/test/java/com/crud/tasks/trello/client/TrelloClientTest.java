@@ -2,6 +2,7 @@ package com.crud.tasks.trello.client;
 
 import com.crud.tasks.config.TrelloConfig;
 import com.crud.tasks.domain.*;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +32,14 @@ public class TrelloClientTest {
 
     @Before
     public void init() {
-        when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
-        when(trelloConfig.getTrelloAppKey()).thenReturn("test");
-        when(trelloConfig.getTrelloToken()).thenReturn("test");
+        when(trelloConfig.getTrelloApiEndpoint()).thenReturn("https://api.trello.com/1");
+        when(trelloConfig.getTrelloAppKey()).thenReturn("87e7e9bdaf61fe95b39fbae37465bbf6");
+        when(trelloConfig.getTrelloToken()).thenReturn("83f4c73d81a9eb384ab95e3792af56e7b3ca6bfe72bbed1b4645aff473235925");
         when(trelloConfig.getTrelloUsername()).thenReturn("kubasok");
+//        when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
+//        when(trelloConfig.getTrelloAppKey()).thenReturn("test");
+//        when(trelloConfig.getTrelloToken()).thenReturn("test");
+//        when(trelloConfig.getTrelloUsername()).thenReturn("kubasok");
     }
 
     @Test
@@ -108,5 +113,17 @@ public class TrelloClientTest {
 //        Then
         assertTrue(fetchedTrelloBoards.isEmpty());
 
+    }
+
+    @Test
+    public void shouldPrintUrl() {
+        List<TrelloBoardDto> testList = trelloClient.getTrelloBoards();
+
+        Assert.assertEquals(0, testList.size());
+        testList.stream().forEach(System.out::println);
+//        URI url = trelloClient.getUrl(trelloConfig.getTrelloApiEndpoint(), trelloConfig.getTrelloAppKey(),
+//                trelloConfig.getTrelloToken(),"name,id",trelloConfig.getTrelloUsername());
+//
+//        System.out.println(url.toString());
     }
 }

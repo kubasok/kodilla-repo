@@ -73,11 +73,11 @@ public class TrelloMapperTestSuite {
 
         trelloLists.add(new TrelloList("1", "new list", false));
         trelloLists.add(new TrelloList("2", "one more list", false));
-        trelloLists.add(new TrelloList("3", "hidden list", true));
+        trelloLists.add(new TrelloList("3", "hidden list", false));
 
         trelloListDtos.add(new TrelloListDto("1", "new list", false));
         trelloListDtos.add(new TrelloListDto("2", "one more list", false));
-        trelloListDtos.add(new TrelloListDto("3","hidden list", true));
+        trelloListDtos.add(new TrelloListDto("3","hidden list", false));
 
         //When
         List<TrelloListDto> testTrelloLists = trelloMapper.mapToListDto(trelloLists);
